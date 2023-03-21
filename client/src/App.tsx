@@ -1,7 +1,6 @@
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import React from "react";
-import "./App.css";
+import SearchBar from "./components/SearchBar";
 
 const lightTheme = createTheme({
   palette: {
@@ -13,7 +12,14 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline enableColorScheme />
-      <div className="App"></div>
+      <Grid
+        container
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <SearchBar />
+      </Grid>
     </ThemeProvider>
   );
 }

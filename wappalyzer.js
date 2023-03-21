@@ -22,24 +22,21 @@ const options = {
 const wappalyzer = new Wappalyzer(options);
 
 module.exports = {
-  getAnalitics: async (req, res) => {
+  getTechnologies: async (req, res) => {
+    let results;
+
     try {
       await wappalyzer.init();
 
       const site = await wappalyzer.open(url);
-
-      // Optionally capture and output errors
-      site.on("error", console.error);
-
-      const results = await site.analyze();
-
-      console.log(JSON.stringify(results, null, 2));
-      await wappalyzer.destroy();
-      res.send(results);
+      results = await site.analyze();
     } catch (error) {
-      console.error(error);
-      await wappalyzer.destroy();
-      res.sendStatus(503);
+      console.error(); // Normally error handler should be implemented.
     }
+
+    await wappalyzer.destroy();
+
+    if (results) res.send(results.technologies);
+    else res.sendStatus(503);
   },
 };
