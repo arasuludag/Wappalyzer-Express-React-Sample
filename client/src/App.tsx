@@ -1,5 +1,6 @@
 import { CssBaseline, Grid } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import ListQueries from "./components/ListQueries";
 import SearchBar from "./components/SearchBar";
 
 const lightTheme = createTheme({
@@ -19,6 +20,7 @@ function App() {
         alignItems="center"
       >
         <SearchBar />
+        <ListQueries />
       </Grid>
     </ThemeProvider>
   );

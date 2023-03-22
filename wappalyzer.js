@@ -1,7 +1,5 @@
 const Wappalyzer = require("wappalyzer");
 
-const url = "https://epctex.com/";
-
 const options = {
   debug: false,
   delay: 500,
@@ -28,10 +26,10 @@ module.exports = {
     try {
       await wappalyzer.init();
 
-      const site = await wappalyzer.open(url);
+      const site = await wappalyzer.open(req.params.website);
       results = await site.analyze();
     } catch (error) {
-      console.error(); // Normally error handler should be implemented.
+      console.error(error); // Normally error handler should be implemented.
     }
 
     await wappalyzer.destroy();

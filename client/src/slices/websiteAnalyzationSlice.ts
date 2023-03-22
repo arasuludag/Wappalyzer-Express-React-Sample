@@ -19,14 +19,18 @@ export interface WebsiteAnalizationResults {
   details: WebsiteAnalizationDetails[];
 }
 
-const initialState: WebsiteAnalizationResults[] = [];
+const initialState: { results: WebsiteAnalizationResults[]; version: number } =
+  {
+    results: [],
+    version: 0,
+  };
 
 export const websiteAnalyzationSlice = createSlice({
   name: "websiteAnalyzation",
   initialState,
   reducers: {
     addWebsite: (state, action: PayloadAction<string>) => {
-      state.push({
+      state.results.push({
         name: action.payload,
         status: "loading",
         details: [],
@@ -35,12 +39,15 @@ export const websiteAnalyzationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchWebsiteResults.fulfilled, (state, action) => {
-      const index = state.findIndex(
+      const index = state.results.findIndex(
         (state) =>
           state.name === action.payload.website && state.status === "loading"
       );
 
-      if (index) state[index].details = action.payload.response;
+      state.version++;
+
+      state.results[index].details = action.payload.response;
+      state.results[index].status = "idle";
     });
   },
 });
@@ -48,7 +55,9 @@ export const websiteAnalyzationSlice = createSlice({
 export const fetchWebsiteResults = createAsyncThunk(
   "websiteAnalyzation/fetchWebsiteResults",
   async (website: string) => {
-    const response = await fetch("/api/technologies");
+    const response = await fetch(
+      "/api/technologies/" + encodeURIComponent(website)
+    );
 
     return {
       website: website,
