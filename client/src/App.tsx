@@ -1,7 +1,8 @@
-import { CssBaseline, Grid } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ListQueries from "./components/ListQueries";
-import SearchBar from "./components/SearchBar";
+import { Route, Routes } from "react-router-dom";
+import DetailsPage from "./pages/DetailsPage";
+import HomePage from "./pages/HomePage";
 
 const lightTheme = createTheme({
   palette: {
@@ -13,15 +14,10 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline enableColorScheme />
-      <Grid
-        container
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="center"
-      >
-        <SearchBar />
-        <ListQueries />
-      </Grid>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/details/:id" element={<DetailsPage />} />
+      </Routes>
     </ThemeProvider>
   );
 }

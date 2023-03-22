@@ -2,17 +2,11 @@ const Wappalyzer = require("wappalyzer");
 
 const options = {
   debug: false,
-  delay: 500,
   headers: {},
-  maxDepth: 3,
-  maxUrls: 10,
-  maxWait: 5000,
   recursive: true,
   probe: true,
   proxy: false,
   userAgent: "Wappalyzer",
-  htmlMaxCols: 2000,
-  htmlMaxRows: 2000,
   noScripts: false,
   noRedirect: false,
 };
@@ -20,7 +14,13 @@ const options = {
 const wappalyzer = new Wappalyzer(options);
 
 module.exports = {
-  getTechnologies: async (req, res) => {
+  getAnalyzation: async (req, res) => {
+    const urlChk =
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+    const urlRegex = new RegExp(urlChk);
+
+    if (!req.params.website.match(urlRegex)) res.sendStatus(403);
+
     let results;
 
     try {
@@ -34,7 +34,12 @@ module.exports = {
 
     await wappalyzer.destroy();
 
-    if (results) res.send(results.technologies);
+    const response = {
+      numOfURLs: Object.keys(results.urls).length,
+      technologies: results.technologies.map((tech) => tech.name),
+    };
+
+    if (response) res.send(response);
     else res.sendStatus(503);
   },
 };

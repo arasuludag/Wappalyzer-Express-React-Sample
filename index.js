@@ -4,7 +4,7 @@ const port = 5000;
 
 const wappalyzer = require("./wappalyzer");
 
-app.get("/api/technologies/:website", wappalyzer.getTechnologies);
+app.get("/api/analyze/:website", wappalyzer.getAnalyzation);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

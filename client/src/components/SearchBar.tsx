@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../app/hooks";
 import {
   addWebsite,
@@ -10,6 +10,7 @@ import {
 
 export default function SearchBar() {
   const [website, setWebsite] = useState<string>("");
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -18,6 +19,15 @@ export default function SearchBar() {
     dispatch(addWebsite(website));
     dispatch(fetchWebsiteResults(website));
   }
+
+  useEffect(() => {
+    const urlChk =
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi;
+    const urlRegex = new RegExp(urlChk);
+
+    if (website.match(urlRegex)) setIsDisabled(false);
+    else setIsDisabled(true);
+  }, [website]);
 
   return (
     <form onSubmit={(event) => handleSubmit(event)}>
@@ -30,7 +40,7 @@ export default function SearchBar() {
             setWebsite(event.target.value);
           }}
         />
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" disabled={isDisabled}>
           Analyze
         </Button>
       </Stack>

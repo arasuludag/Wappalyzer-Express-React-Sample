@@ -2,28 +2,24 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 export interface WebsiteAnalizationDetails {
-  slug: string;
-  name: string;
-  description: string;
-  confidence: number;
-  version: number | null;
-  icon: string;
-  website: string;
-  cpe: string;
-  categories: { id: string; slug: string; name: string }[];
+  numOfURLs: number;
+  technologies: string[];
 }
 
 export interface WebsiteAnalizationResults {
+  id: number;
   name: string;
   status: "idle" | "loading" | "failed";
-  details: WebsiteAnalizationDetails[];
+  details: WebsiteAnalizationDetails;
 }
 
-const initialState: { results: WebsiteAnalizationResults[]; version: number } =
-  {
-    results: [],
-    version: 0,
-  };
+const initialState: {
+  results: WebsiteAnalizationResults[];
+  nextFreeID: number;
+} = {
+  results: [],
+  nextFreeID: 0,
+};
 
 export const websiteAnalyzationSlice = createSlice({
   name: "websiteAnalyzation",
@@ -31,10 +27,13 @@ export const websiteAnalyzationSlice = createSlice({
   reducers: {
     addWebsite: (state, action: PayloadAction<string>) => {
       state.results.push({
+        id: state.nextFreeID,
         name: action.payload,
         status: "loading",
-        details: [],
+        details: { numOfURLs: 0, technologies: [] },
       });
+
+      state.nextFreeID++;
     },
   },
   extraReducers: (builder) => {
@@ -43,8 +42,6 @@ export const websiteAnalyzationSlice = createSlice({
         (state) =>
           state.name === action.payload.website && state.status === "loading"
       );
-
-      state.version++;
 
       state.results[index].details = action.payload.response;
       state.results[index].status = "idle";
@@ -55,9 +52,7 @@ export const websiteAnalyzationSlice = createSlice({
 export const fetchWebsiteResults = createAsyncThunk(
   "websiteAnalyzation/fetchWebsiteResults",
   async (website: string) => {
-    const response = await fetch(
-      "/api/technologies/" + encodeURIComponent(website)
-    );
+    const response = await fetch("/api/analyze/" + encodeURIComponent(website));
 
     return {
       website: website,
@@ -67,5 +62,8 @@ export const fetchWebsiteResults = createAsyncThunk(
 );
 
 export const { addWebsite } = websiteAnalyzationSlice.actions;
+
+export const selectWebsites = (state: RootState) =>
+  state.websiteAnalization.results;
 
 export default websiteAnalyzationSlice.reducer;
