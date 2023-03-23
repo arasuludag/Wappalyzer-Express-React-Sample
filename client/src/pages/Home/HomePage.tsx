@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
-import ListQueries from "../components/ListQueries";
-import SearchBar from "../components/SearchBar";
+import ListQueries from "./ListQueries";
+import SearchBar from "./SearchBar";
 
 export default function HomePage() {
   return (

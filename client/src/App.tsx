@@ -1,8 +1,8 @@
 import { CssBaseline } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes } from "react-router-dom";
-import DetailsPage from "./pages/DetailsPage";
-import HomePage from "./pages/HomePage";
+import DetailsPage from "./pages/Details/DetailsPage";
+import HomePage from "./pages/Home/HomePage";
 
 const lightTheme = createTheme({
   palette: {

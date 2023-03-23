@@ -6,6 +6,6 @@ const wappalyzer = require("./wappalyzer");
 
 app.get("/api/analyze/:website", wappalyzer.getAnalyzation);
 
-app.listen(port, () => {
+module.exports = app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

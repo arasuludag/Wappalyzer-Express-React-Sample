@@ -2,11 +2,11 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch } from "../../app/hooks";
 import {
   addWebsite,
   fetchWebsiteResults,
-} from "../slices/websiteAnalyzationSlice";
+} from "../../slices/websiteAnalyzationSlice";
 
 export default function SearchBar() {
   const [website, setWebsite] = useState<string>("");
@@ -33,14 +33,20 @@ export default function SearchBar() {
     <form onSubmit={(event) => handleSubmit(event)}>
       <Stack spacing={2}>
         <TextField
-          id="outlined-basic"
+          id="url-query-textfield"
+          inputProps={{ "data-testid": "url-query-textfield" }}
           label="URL want to be checked"
           variant="outlined"
           onChange={(event) => {
             setWebsite(event.target.value);
           }}
         />
-        <Button type="submit" variant="contained" disabled={isDisabled}>
+        <Button
+          type="submit"
+          data-testid="analyze-button"
+          variant="contained"
+          disabled={isDisabled}
+        >
           Analyze
         </Button>
       </Stack>

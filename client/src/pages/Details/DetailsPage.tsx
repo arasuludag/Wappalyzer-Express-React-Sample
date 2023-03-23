@@ -4,8 +4,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { selectWebsites } from "../slices/websiteAnalyzationSlice";
-import { useAppSelector } from "../app/hooks";
+import { selectWebsites } from "../../slices/websiteAnalyzationSlice";
+import { useAppSelector } from "../../app/hooks";
 import { useParams } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -30,13 +30,9 @@ export default function BasicTable() {
       sx={{ margin: "50px auto" }}
     >
       <Grid item>
-        <Card>
-          <CardContent>
-            <Typography variant="h4">
-              {website?.name.replace(/(^\w+:|^)\/\//, "")}'s results
-            </Typography>
-          </CardContent>
-        </Card>
+        <Typography variant="h4">
+          {website?.name.replace(/(^\w+:|^)\/\//, "")}'s results
+        </Typography>
       </Grid>
 
       <Grid item>

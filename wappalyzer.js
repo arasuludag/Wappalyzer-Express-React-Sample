@@ -2,11 +2,8 @@ const Wappalyzer = require("wappalyzer");
 
 const options = {
   debug: false,
-  headers: {},
   recursive: true,
   probe: true,
-  proxy: false,
-  userAgent: "Wappalyzer",
   noScripts: false,
   noRedirect: false,
 };

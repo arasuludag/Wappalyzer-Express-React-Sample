@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import { useState } from "react";
-import { useAppSelector } from "../app/hooks";
-import { selectWebsites } from "../slices/websiteAnalyzationSlice";
+import { useAppSelector } from "../../app/hooks";
+import { selectWebsites } from "../../slices/websiteAnalyzationSlice";
 import WebsiteTable from "./WebsiteTable";
 
 const itemsPerPage = 3;
