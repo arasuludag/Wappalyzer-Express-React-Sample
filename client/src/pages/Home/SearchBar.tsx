@@ -16,7 +16,7 @@ export default function SearchBar() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    dispatch(addWebsite(website));
+    dispatch(addWebsite(website)); // This is blocking.
     dispatch(fetchWebsiteResults(website));
   }
 

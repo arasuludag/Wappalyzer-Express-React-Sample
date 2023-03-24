@@ -2,7 +2,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { WebsiteAnalizationResults } from "../../slices/websiteAnalyzationSlice";
@@ -23,7 +22,11 @@ export default function BasicTable(props: {
     if (website.status === "loading") return "Analyzing...";
     else
       return (
-        <Button variant="text" onClick={() => handleClick(website.id)}>
+        <Button
+          variant="text"
+          size="small"
+          onClick={() => handleClick(website.id)}
+        >
           View More
         </Button>
       );
@@ -40,12 +43,6 @@ export default function BasicTable(props: {
       }}
     >
       <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Website</TableCell>
-            <TableCell align="right">Details</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           {props.websites.map((row) => (
             <TableRow

@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import { useState } from "react";
 import { useAppSelector } from "../../app/hooks";
@@ -26,19 +26,24 @@ export default function PaginatedItems() {
   };
 
   return (
-    <Stack
-      direction="column"
-      justifyContent="space-between"
-      alignItems="center"
-      spacing={0}
-      sx={{ height: 300 }}
-    >
-      <WebsiteTable websites={currentItems} />
-      <Pagination
-        count={nPages}
-        onChange={handlePageClick}
-        sx={{ position: "relative", bottom: 0 }}
-      />
-    </Stack>
+    <>
+      {websites.length > 0 ? (
+        <Stack
+          direction="column"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={0}
+          sx={{ height: 300 }}
+        >
+          <Typography variant="h5">Analysing Targets</Typography>
+          <WebsiteTable websites={currentItems} />
+          <Pagination
+            count={nPages}
+            onChange={handlePageClick}
+            sx={{ position: "relative", bottom: 0 }}
+          />
+        </Stack>
+      ) : null}
+    </>
   );
 }

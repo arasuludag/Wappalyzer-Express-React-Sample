@@ -21,6 +21,8 @@ const initialState: {
   nextFreeID: 0,
 };
 
+// ID system would need to be changed after implementing a real database and database fetch.
+
 export const websiteAnalyzationSlice = createSlice({
   name: "websiteAnalyzation",
   initialState,
