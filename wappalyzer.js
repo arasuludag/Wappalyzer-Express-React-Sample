@@ -31,12 +31,11 @@ module.exports = {
 
     await wappalyzer.destroy();
 
-    const response = {
-      numOfURLs: Object.keys(results.urls).length,
-      technologies: results.technologies.map((tech) => tech.name),
-    };
-
-    if (response) res.send(response);
+    if (results)
+      res.send({
+        numOfURLs: Object.keys(results.urls).length,
+        technologies: results.technologies.map((tech) => tech.name),
+      });
     else res.sendStatus(503);
   },
 };
